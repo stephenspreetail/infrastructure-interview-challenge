@@ -151,3 +151,9 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# Interview reference materials
+stub_responses_reference.py
+INTERVIEW_GUIDE.md
+CLAUDE.md
+docs/
