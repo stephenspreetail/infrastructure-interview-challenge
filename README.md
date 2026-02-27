@@ -22,13 +22,13 @@ The format of the keys in the secret store is `<app-name>/<environment>/<secret-
 
 ## Getting started
 
-**Before the interview:**
+**Install:**
 
-1. Install the Python [poetry](https://python-poetry.org/docs/) tool. This will be used to install the dependencies into a virtualenv.
+1. Install the Python [poetry](https://python-poetry.org/docs/#installing-with-the-official-installer/) tool. This will be used to install the dependencies into a virtualenv.
 2. Clone this repository to your own machine.
 3. Run `poetry install` inside the repository
 
-**In the interview:**
+**Code Changes:**
 
 1. Modify the `rotate_secrets` function in `rotate_secrets.py` to implement your solution.
 2. Once you have completed your implementation you will be given the stub values to test against. Place these in the `stub_responses` function in `stubber.py`
@@ -38,6 +38,4 @@ The format of the keys in the secret store is `<app-name>/<environment>/<secret-
 
 - Ability to read and interpret technical documentation
 - Ability to reason through a problem and communicate through the solution
-- Ability to state and confirm assumptions
-- Ability to write idiomatic python
 - Ability to debug issues as they arise
