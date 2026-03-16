@@ -35,16 +35,62 @@ def stub_responses(stubber) -> None:
         expected_params={"UserName": "app1/production"},
     )
 
-    # TODO:
-    #
-    # We will give you the rest of the stubbed function calls and responses after you have
-    # completed your implementation of the rotate_secrets function.
-    #
-    # You can implement the first part of the function using the above stubbed response, and
-    # then paste in the rest of the stubbed responses once we give them to you.
-    #
-    # The expectation is that your rotate_secrets function will make the same calls to the AWS
-    # client with the same parameters as defined in the stubbed responses, and that it will
-    # correctly handle the responses to rotate the secrets in the secret store.
+    # Create new access key for app1/production
+    stubber.add_response(
+        "create_access_key",
+        {
+            "AccessKey": {
+                "UserName": "app1/production",
+                "AccessKeyId": "PRODNEW999999EXAMPLE",
+                "Status": "Active",
+                "SecretAccessKey": "production_new_secret_987654321",
+                "CreateDate": datetime(2024, 2, 1, 0, 0, 0),
+            }
+        },
+        expected_params={"UserName": "app1/production"},
+    )
+
+    # Delete old access key for app1/production
+    stubber.add_response(
+        "delete_access_key", {}, expected_params={"UserName": "app1/production", "AccessKeyId": "PROD111111111EXAMPLE"}
+    )
+
+    # ===== app1/staging =====
+
+    # List existing access keys for app1/staging
+    stubber.add_response(
+        "list_access_keys",
+        {
+            "AccessKeyMetadata": [
+                {
+                    "UserName": "app1/staging",
+                    "AccessKeyId": "STAGE22222222EXAMPLE",
+                    "Status": "Active",
+                    "CreateDate": datetime(2024, 1, 1, 0, 0, 0),
+                }
+            ]
+        },
+        expected_params={"UserName": "app1/staging"},
+    )
+
+    # Create new access key for app1/staging
+    stubber.add_response(
+        "create_access_key",
+        {
+            "AccessKey": {
+                "UserName": "app1/staging",
+                "AccessKeyId": "STAGENEW88888EXAMPLE",
+                "Status": "Active",
+                "SecretAccessKey": "staging_new_secret_987654321",
+                "CreateDate": datetime(2024, 2, 1, 0, 0, 0),
+            }
+        },
+        expected_params={"UserName": "app1/staging"},
+    )
+
+    # Delete old access key for app1/staging
+    stubber.add_response(
+        "delete_access_key", {}, expected_params={"UserName": "app1/staging", "AccessKeyId": "STAGE22222222EXAMPLE"}
+    )
 
     stubber.activate()
