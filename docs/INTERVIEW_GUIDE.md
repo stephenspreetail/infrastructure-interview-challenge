@@ -2,12 +2,8 @@
 
 ## Reference Materials Available to Candidates
 
-* **STUBBING_GUIDE.md** - Concise guide with IAM-specific examples
-  - Shows `stubber.add_response()` API with IAM operations
-  - Explains common errors and how to debug them
-  - Much more approachable than the full botocore source
+* `src/stubber.py` is provided and contains the stubber implementation and example stub responses
 * **boto3 IAM documentation** - https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iam.html
-* **stub.txt** (optional) - Full botocore Stubber source code if they want deep implementation details
 
 ## Using the Stub Responses
 
@@ -53,22 +49,15 @@ After successful execution, the secret store should contain:
 - Hardcoding usernames instead of deriving from secret keys
 - Not updating both ACCESS_KEY_ID and SECRET_ACCESS_KEY in the secret store
 
-### Alternative Valid Approaches
-
-If a candidate takes a different approach, you may need to adjust stubs:
-
 **Different order per user:**
 - Some might process all operations for production first, then staging
 - Some might do all list operations, then all creates, then all deletes
-- Adjust stub order to match their implementation
 
 **Different IAM operations:**
 - Some might call `update_access_key` to deactivate before deleting
-- Add additional stubs as needed
 
 ## Evaluation Criteria
 
-✓ **Reads documentation** - Uses boto3 docs to find correct IAM methods
 ✓ **Reasons through problem** - Understands create-before-delete for zero downtime
 ✓ **Parses secret keys** - Correctly derives username from `<app>/<env>/<secret>` format
 ✓ **Updates secret store** - Calls `set_secret()` with both new key ID and secret
@@ -78,5 +67,4 @@ If a candidate takes a different approach, you may need to adjust stubs:
 ## Setup and Dependencies
 
 * Only `boto3` is required. Install with `pip install boto3`.
-* No Poetry or dev tools required.
 * Candidate runs the script with `python src/rotate_secrets.py`.
