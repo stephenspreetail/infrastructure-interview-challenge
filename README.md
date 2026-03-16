@@ -34,11 +34,10 @@ Your task is to implement a script that will read all the secrets from a secret 
 
 **Install:**
 
-1. Install the Python [poetry](https://python-poetry.org/docs/#installing-with-the-official-installer/) tool
-2. Clone this repository to your own machine
-3. Run `poetry install` inside the repository - this will install the dependencies into a virtualenv
+1. Clone this repository to your own machine
+2. Creata a venv and run `pip install boto3` to install the required dependency
 
 **Code Changes:**
 
 1. Modify the `rotate_secrets` function in `rotate_secrets.py` to implement your solution
-2. Run Your script with `poetry run python src/rotate_secrets.py`
+2. Run your script with `python src/rotate_secrets.py`
