@@ -25,9 +25,8 @@ Your task is to implement a script that will read all the secrets from a secret 
 ### AWS IAM Client (boto3) Stubbing
 
 - We have implemented request stubbing in `boto3` so that you don't make actual calls to AWS
-- Once you have written your solution, we will provide you with the stubbed calls and response values to test against in `stubber.py`
-- Use the following documentation to determine which Access Key `boto3` calls you will make
-- The `list_access_keys` stubbed call has been given to you for the `app1/production` user
+	- Stubbed calls and response values are provided in `stubber.py`
+	- You can use the following documentation for IAM `boto3` call details
 
 > https://docs.aws.amazon.com/boto3/latest/reference/services/iam.html
 
@@ -42,11 +41,4 @@ Your task is to implement a script that will read all the secrets from a secret 
 **Code Changes:**
 
 1. Modify the `rotate_secrets` function in `rotate_secrets.py` to implement your solution
-2. Once you have completed your implementation you will be given the rest of the stub functions and responses to test against
-3. Run Your script with `poetry run python src/rotate_secrets.py`
-
-## Things we’ll be looking for:
-
-- Ability to read and interpret technical documentation
-- Ability to reason through a problem and communicate through the solution
-- Ability to debug issues as they arise
+2. Run Your script with `poetry run python src/rotate_secrets.py`
