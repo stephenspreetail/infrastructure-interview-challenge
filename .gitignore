@@ -153,7 +153,6 @@ dmypy.json
 cython_debug/
 
 # Interview reference materials
-stub_responses_reference.py
 INTERVIEW_GUIDE.md
 CLAUDE.md
 docs/
