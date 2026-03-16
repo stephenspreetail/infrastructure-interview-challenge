@@ -153,7 +153,5 @@ dmypy.json
 cython_debug/
 
 # Interview reference materials
-INTERVIEW_GUIDE.md
 CLAUDE.md
-docs/
 .vscode/settings.json

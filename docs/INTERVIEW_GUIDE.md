@@ -1,0 +1,82 @@
+# Interview Guide (DO NOT COMMIT)
+
+## Reference Materials Available to Candidates
+
+* **STUBBING_GUIDE.md** - Concise guide with IAM-specific examples
+  - Shows `stubber.add_response()` API with IAM operations
+  - Explains common errors and how to debug them
+  - Much more approachable than the full botocore source
+* **boto3 IAM documentation** - https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/iam.html
+* **stub.txt** (optional) - Full botocore Stubber source code if they want deep implementation details
+
+## Using the Stub Responses
+
+### During the Interview
+
+1. **Watch the candidate implement** `rotate_secrets()` function
+2. **Observe their approach** - What boto3 IAM methods are they calling?
+3. **Stub responses are provided up front in `src/stubber.py`**
+4. **Candidate should use the stubbed responses as they implement their solution**
+
+### Expected Stub Sequence
+
+The stubs assume this rotation flow for each user:
+1. `list_access_keys(UserName='...')` - Get current keys
+2. `create_access_key(UserName='...')` - Create new key
+3. `delete_access_key(UserName='...', AccessKeyId='...')` - Delete old key
+
+### Expected Final Output
+
+After successful execution, the secret store should contain:
+
+```python
+{
+    'app1/production/AWS_ACCESS_KEY_ID': 'PRODNEW999999EXAMPLE',
+    'app1/production/AWS_SECRET_ACCESS_KEY': 'production_new_secret_987654321',
+    'app1/production/MY_SECRET': 'production_secret_value',
+    'app1/staging/AWS_ACCESS_KEY_ID': 'STAGENEW88888EXAMPLE',
+    'app1/staging/AWS_SECRET_ACCESS_KEY': 'staging_new_secret_987654321',
+    'app1/staging/MY_SECRET': 'staging_secret_value',
+}
+```
+
+### Common Issues to Look For
+
+**If stubs fail:**
+- Did they call APIs in a different order?
+- Did they use different parameter names?
+- Did they extract the username correctly from secret keys?
+
+**Implementation red flags:**
+- Deleting keys before creating new ones (causes downtime)
+- Not handling multiple environments (only rotating one user)
+- Hardcoding usernames instead of deriving from secret keys
+- Not updating both ACCESS_KEY_ID and SECRET_ACCESS_KEY in the secret store
+
+### Alternative Valid Approaches
+
+If a candidate takes a different approach, you may need to adjust stubs:
+
+**Different order per user:**
+- Some might process all operations for production first, then staging
+- Some might do all list operations, then all creates, then all deletes
+- Adjust stub order to match their implementation
+
+**Different IAM operations:**
+- Some might call `update_access_key` to deactivate before deleting
+- Add additional stubs as needed
+
+## Evaluation Criteria
+
+✓ **Reads documentation** - Uses boto3 docs to find correct IAM methods
+✓ **Reasons through problem** - Understands create-before-delete for zero downtime
+✓ **Parses secret keys** - Correctly derives username from `<app>/<env>/<secret>` format
+✓ **Updates secret store** - Calls `set_secret()` with both new key ID and secret
+✓ **Handles multiple users** - Rotates keys for both production and staging
+✓ **Debugs issues** - Can interpret stub mismatch errors and fix implementation
+
+## Setup and Dependencies
+
+* Only `boto3` is required. Install with `pip install boto3`.
+* No Poetry or dev tools required.
+* Candidate runs the script with `python src/rotate_secrets.py`.
